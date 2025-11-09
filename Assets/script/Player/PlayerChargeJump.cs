@@ -24,6 +24,7 @@ public class PlayerChargeJump : MonoBehaviour
 
     public bool IsCharging => isCharging;
     public bool IsGrounded => isGrounded;
+    public float CurrentPower => currentJumpPower;
 
     private void Awake()
     {
