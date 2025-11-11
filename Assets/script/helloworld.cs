@@ -1,6 +1,6 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
-public class text : MonoBehaviour
+public class helloworld : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -12,7 +12,7 @@ public class text : MonoBehaviour
     void Update()
     {
         /*
-         ¾È³çÇÏ¼¼¿ä
+         ì•ˆë…•í•˜ì„¸ìš”
          */
     }
 }
