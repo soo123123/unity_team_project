@@ -1,29 +1,29 @@
-ï»¿using UnityEngine;
+using UnityEngine;
 
 public class ImageFlip : MonoBehaviour
 {
-    // ì´ë™ ë°©í–¥ì— ë”°ë¼ ìŠ¤í”„ë¼ì´íŠ¸ ì´ë¯¸ì§€ë¥¼ ë°˜ì „ì‹œì¼œì£¼ëŠ” ìŠ¤í¬ë¦½íŠ¸
+    // ÀÌµ¿ ¹æÇâ¿¡ µû¶ó ½ºÇÁ¶óÀÌÆ® ÀÌ¹ÌÁö¸¦ ¹İÀü½ÃÄÑÁÖ´Â ½ºÅ©¸³Æ®
 
-    private SpriteRenderer spriteRenderer;  // ìŠ¤í”„ë¼ì´íŠ¸ ë Œë”ëŸ¬
-    private Rigidbody2D rb;                  // ë¬¼ë¦¬ì—”ì§„(ì†ë„ ë°©í–¥ íŒë³„ìš©)
+    private SpriteRenderer spriteRenderer;  // ½ºÇÁ¶óÀÌÆ® ·»´õ·¯
+    private Rigidbody2D rb;                  // ¹°¸®¿£Áø(¼Óµµ ¹æÇâ ÆÇº°¿ë)
 
     void Awake()
     {
-        // SpriteRendererì™€ Rigidbody2D ì»´í¬ë„ŒíŠ¸ë¥¼ ê°€ì ¸ì˜´
+        // SpriteRenderer¿Í Rigidbody2D ÄÄÆ÷³ÍÆ®¸¦ °¡Á®¿È
         rb = GetComponentInParent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     void Update()
     {
-        // --- ì¢Œìš° ì´ë™ ë°©í–¥ì— ë”°ë¼ ì´ë¯¸ì§€ ë°˜ì „ ---
+        // --- ÁÂ¿ì ÀÌµ¿ ¹æÇâ¿¡ µû¶ó ÀÌ¹ÌÁö ¹İÀü ---
         if (rb.linearVelocity.x > 0.05f)
         {
-            spriteRenderer.flipX = false; // ì˜¤ë¥¸ìª½ ì´ë™ â†’ ì›ë˜ ì´ë¯¸ì§€
+            spriteRenderer.flipX = false; // ¿À¸¥ÂÊ ÀÌµ¿ ¡æ ¿ø·¡ ÀÌ¹ÌÁö
         }
         else if (rb.linearVelocity.x < -0.05f)
         {
-            spriteRenderer.flipX = true;  // ì™¼ìª½ ì´ë™ â†’ ë°˜ì „
+            spriteRenderer.flipX = true;  // ¿ŞÂÊ ÀÌµ¿ ¡æ ¹İÀü
         }
     }
 }

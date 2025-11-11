@@ -1,38 +1,38 @@
-ï»¿using UnityEngine;
+using UnityEngine;
 
 public class BombManager : MonoBehaviour
 {
-    // ì”¬ì— í•˜ë‚˜ë§Œ ì¡´ì¬ (ê°„ë‹¨ ì‹±ê¸€í„´)
+    // ¾À¿¡ ÇÏ³ª¸¸ Á¸Àç (°£´Ü ½Ì±ÛÅÏ)
     public static BombManager Instance { get; private set; }
 
     [Header("Prefabs")]
-    public BombController bombPrefab;   // Bomb í”„ë¦¬íŒ¹
+    public BombController bombPrefab;   // Bomb ÇÁ¸®ÆÕ
 
-    // í˜„ì¬ í•„ë“œì— ì¡´ì¬í•˜ëŠ” ì í™”ëœ í­íƒ„ (1ê°œ ì œí•œ)
+    // ÇöÀç ÇÊµå¿¡ Á¸ÀçÇÏ´Â Á¡È­µÈ ÆøÅº (1°³ Á¦ÇÑ)
     public BombController ActiveBomb { get; private set; }
 
     void Awake()
     {
         if (Instance != null && Instance != this) { Destroy(gameObject); return; }
         Instance = this;
-        // í•„ìš”ì‹œ DontDestroyOnLoad(gameObject);
+        // ÇÊ¿ä½Ã DontDestroyOnLoad(gameObject);
     }
 
     public bool HasActiveBomb => ActiveBomb != null;
 
-    // í­íƒ„ ìƒì„± (ì í™” ìƒíƒœë¡œ ìŠ¤í°)
+    // ÆøÅº »ı¼º (Á¡È­ »óÅÂ·Î ½ºÆù)
     public BombController SpawnBomb(Vector2 pos, Quaternion rot)
     {
         if (HasActiveBomb) return null;
 
         var bomb = Instantiate(bombPrefab, pos, rot);
         ActiveBomb = bomb;
-        bomb.OnDestroyed += HandleBombDestroyed; // í­íƒ„ ì œê±° ì½œë°±
-        bomb.Ignite(); // ì í™” & íƒ€ì´ë¨¸ ì‹œì‘
+        bomb.OnDestroyed += HandleBombDestroyed; // ÆøÅº Á¦°Å Äİ¹é
+        bomb.Ignite(); // Á¡È­ & Å¸ÀÌ¸Ó ½ÃÀÛ
         return bomb;
     }
 
-    // í­íƒ„ì´ ì‚­ì œ/í­ë°œ/ì†Œë©¸ë  ë•Œ í˜¸ì¶œ
+    // ÆøÅºÀÌ »èÁ¦/Æø¹ß/¼Ò¸êµÉ ¶§ È£Ãâ
     private void HandleBombDestroyed(BombController bomb)
     {
         if (ActiveBomb == bomb)

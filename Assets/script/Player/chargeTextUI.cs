@@ -1,26 +1,26 @@
-ï»¿using UnityEngine;
+using UnityEngine;
 using TMPro;
 
 public class ChargeTextUI : MonoBehaviour
 {
-    // ì í”„ ì¶©ì „ ìˆ˜ì¹˜ë¥¼ ì‹¤ì‹œê°„ìœ¼ë¡œ UIì— í‘œì‹œí•˜ëŠ” ìŠ¤í¬ë¦½íŠ¸
+    // Á¡ÇÁ ÃæÀü ¼öÄ¡¸¦ ½Ç½Ã°£À¸·Î UI¿¡ Ç¥½ÃÇÏ´Â ½ºÅ©¸³Æ®
 
-    public PlayerChargeJump chargeJump; // PlayerChargeJump ìŠ¤í¬ë¦½íŠ¸ ì°¸ì¡°
-    public TextMeshPro textMesh;        // ë¨¸ë¦¬ ìœ„ì— ìˆëŠ” TextMeshPro
+    public PlayerChargeJump chargeJump; // PlayerChargeJump ½ºÅ©¸³Æ® ÂüÁ¶
+    public TextMeshPro textMesh;        // ¸Ó¸® À§¿¡ ÀÖ´Â TextMeshPro
 
     void Update()
     {
-        // ì°¸ì¡°ê°€ ì—†ìœ¼ë©´ ì•„ë¬´ ê²ƒë„ í•˜ì§€ ì•ŠìŒ
+        // ÂüÁ¶°¡ ¾øÀ¸¸é ¾Æ¹« °Íµµ ÇÏÁö ¾ÊÀ½
         if (chargeJump == null || textMesh == null) return;
 
-        // ì¶©ì „ ì¤‘ì¼ ë•Œë§Œ ìˆ«ì í‘œì‹œ
+        // ÃæÀü ÁßÀÏ ¶§¸¸ ¼ıÀÚ Ç¥½Ã
         if (chargeJump.IsCharging)
         {
-            textMesh.text = $"{chargeJump.CurrentPower:F0}"; // ì†Œìˆ˜ì  1ìë¦¬ê¹Œì§€ í‘œì‹œ
+            textMesh.text = $"{chargeJump.CurrentPower:F0}"; // ¼Ò¼öÁ¡ 1ÀÚ¸®±îÁö Ç¥½Ã
         }
         else
         {
-            textMesh.text = ""; // ì¶©ì „ ì•ˆ í•˜ë©´ ìˆ¨ê¹€
+            textMesh.text = ""; // ÃæÀü ¾È ÇÏ¸é ¼û±è
         }
     }
 }

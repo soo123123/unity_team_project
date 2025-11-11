@@ -1,4 +1,4 @@
-ï»¿using UnityEngine;
+using UnityEngine;
 using System;
 using System.Collections;
 
@@ -7,22 +7,22 @@ using System.Collections;
 public class BombController : MonoBehaviour
 {
     [Header("Fuse (sec)")]
-    public float fuseTime = 10f;  // ì í™” í›„ ìˆ˜ëª…
+    public float fuseTime = 10f;  // Á¡È­ ÈÄ ¼ö¸í
 
     [Header("Throw Tuning")]
-    public float throwForce = 8f; // ë˜ì§ˆ ë•Œ ê¸°ë³¸ í˜
-    public float throwArc = 3f;   // ìœ„ë¡œ ë“¤ì–´ì˜¬ë¦¬ëŠ” ì–‘ (ìƒí–¥)
+    public float throwForce = 8f; // ´øÁú ¶§ ±âº» Èû
+    public float throwArc = 3f;   // À§·Î µé¾î¿Ã¸®´Â ¾ç (»óÇâ)
 
     private Rigidbody2D rb;
     private Collider2D col;
 
-    // ë‚´ë¶€ ìƒíƒœ
-    private bool isIgnited = false; // ì í™” ì¤‘ì¸ì§€
-    private bool isPicked = false;  // í”Œë ˆì´ì–´ê°€ ë“¤ê³  ìˆëŠ”ì§€
-    private float elapsed = 0f;     // ê²½ê³¼ ì‹œê°„
+    // ³»ºÎ »óÅÂ
+    private bool isIgnited = false; // Á¡È­ ÁßÀÎÁö
+    private bool isPicked = false;  // ÇÃ·¹ÀÌ¾î°¡ µé°í ÀÖ´ÂÁö
+    private float elapsed = 0f;     // °æ°ú ½Ã°£
     private Coroutine fuseCo;
 
-    // ì‚­ì œ/ì†Œë©¸ ì‹œ ë§¤ë‹ˆì €ì—ê²Œ ì•Œë¦¬ê¸° ìœ„í•œ ì´ë²¤íŠ¸
+    // »èÁ¦/¼Ò¸ê ½Ã ¸Å´ÏÀú¿¡°Ô ¾Ë¸®±â À§ÇÑ ÀÌº¥Æ®
     public event Action<BombController> OnDestroyed;
 
     void Awake()
@@ -31,17 +31,17 @@ public class BombController : MonoBehaviour
         col = GetComponent<Collider2D>();
     }
 
-    // ì í™” ì‹œì‘ (íƒ€ì´ë¨¸ ê°€ë™)
+    // Á¡È­ ½ÃÀÛ (Å¸ÀÌ¸Ó °¡µ¿)
     public void Ignite()
     {
         if (isIgnited) return;
         isIgnited = true;
 
-        // ë¬¼ë¦¬ í™œì„±
+        // ¹°¸® È°¼º
         rb.bodyType = RigidbodyType2D.Dynamic;
         col.isTrigger = false;
 
-        // íƒ€ì´ë¨¸ ì‹œì‘
+        // Å¸ÀÌ¸Ó ½ÃÀÛ
         fuseCo = StartCoroutine(FuseCountdown());
     }
 
@@ -54,26 +54,26 @@ public class BombController : MonoBehaviour
             yield return null;
         }
 
-        // íƒ€ì´ë¨¸ ì¢…ë£Œ ì‹œ ë¶„ê¸°:
+        // Å¸ÀÌ¸Ó Á¾·á ½Ã ºĞ±â:
         if (isPicked)
         {
-            // í”Œë ˆì´ì–´ê°€ ë“¤ê³  ìˆë‹¤ë©´ í­ë°œ ëŒ€ì‹  'ì‹¬ì§€ êº¼ì§' (ê·¸ëƒ¥ ì‚¬ë¼ì§)
+            // ÇÃ·¹ÀÌ¾î°¡ µé°í ÀÖ´Ù¸é Æø¹ß ´ë½Å '½ÉÁö ²¨Áü' (±×³É »ç¶óÁü)
             Defuse();
         }
         else
         {
-            // ë“¤ê³  ìˆì§€ ì•Šë‹¤ë©´ í­ë°œ (ì´ë²ˆ ë‹¨ê³„ëŠ” ì†Œë©¸ë§Œ)
+            // µé°í ÀÖÁö ¾Ê´Ù¸é Æø¹ß (ÀÌ¹ø ´Ü°è´Â ¼Ò¸ê¸¸)
             Explode();
         }
     }
 
-    // í”Œë ˆì´ì–´ê°€ ë“¤ì—ˆì„ ë•Œ
+    // ÇÃ·¹ÀÌ¾î°¡ µé¾úÀ» ¶§
     public void PickUp(Transform hand)
     {
-        if (!isIgnited) return; // í•­ìƒ ì í™” ìƒíƒœë¡œë§Œ ë‹¤ë£¬ë‹¤ (ê¸°íš)
+        if (!isIgnited) return; // Ç×»ó Á¡È­ »óÅÂ·Î¸¸ ´Ù·é´Ù (±âÈ¹)
         isPicked = true;
 
-        // ë¬¼ë¦¬ ë„ê³  ì† ìœ„ì¹˜ë¡œ ê³ ì •
+        // ¹°¸® ²ô°í ¼Õ À§Ä¡·Î °íÁ¤
         rb.bodyType = RigidbodyType2D.Kinematic;
         col.isTrigger = true;
         transform.SetParent(hand);
@@ -81,7 +81,7 @@ public class BombController : MonoBehaviour
         transform.localRotation = Quaternion.identity;
     }
 
-    // ì†ì—ì„œ ë˜ì§€ê¸°
+    // ¼Õ¿¡¼­ ´øÁö±â
     public void Throw(Vector2 dir)
     {
         if (!isIgnited) return;
@@ -92,20 +92,20 @@ public class BombController : MonoBehaviour
         rb.bodyType = RigidbodyType2D.Dynamic;
         col.isTrigger = false;
 
-        // ë˜ì§€ëŠ” í˜ ì ìš© (í¬ë¬¼ì„ ìš© ìœ„ìª½ ì„±ë¶„ ì¶”ê°€)
+        // ´øÁö´Â Èû Àû¿ë (Æ÷¹°¼±¿ë À§ÂÊ ¼ººĞ Ãß°¡)
         var force = new Vector2(dir.x * throwForce, dir.y * throwForce + throwArc);
         rb.AddForce(force, ForceMode2D.Impulse);
     }
 
     private void Defuse()
     {
-        // 'ì‹¬ì§€ êº¼ì§' ì—°ì¶œ ì§€ì  (ì§€ê¸ˆì€ ê·¸ëƒ¥ ì‚­ì œ)
+        // '½ÉÁö ²¨Áü' ¿¬Ãâ ÁöÁ¡ (Áö±İÀº ±×³É »èÁ¦)
         CleanupAndDestroy();
     }
 
     private void Explode()
     {
-        // í­ë°œ ì—°ì¶œ ì§€ì  (ì§€ê¸ˆì€ ê·¸ëƒ¥ ì‚­ì œ)
+        // Æø¹ß ¿¬Ãâ ÁöÁ¡ (Áö±İÀº ±×³É »èÁ¦)
         CleanupAndDestroy();
     }
 
@@ -118,10 +118,10 @@ public class BombController : MonoBehaviour
 
     private void OnDestroy()
     {
-        OnDestroyed?.Invoke(this); // ì•ˆì „ë§(ì¤‘ë³µ í˜¸ì¶œ ë¬´í•´)
+        OnDestroyed?.Invoke(this); // ¾ÈÀü¸Á(Áßº¹ È£Ãâ ¹«ÇØ)
     }
 
-    // í¸ì˜: í”Œë ˆì´ì–´ ê·¼ì²˜ íŒì •ìš© ê¸°ì¦ˆëª¨
+    // ÆíÀÇ: ÇÃ·¹ÀÌ¾î ±ÙÃ³ ÆÇÁ¤¿ë ±âÁî¸ğ
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;

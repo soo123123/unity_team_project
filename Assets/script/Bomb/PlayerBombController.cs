@@ -1,24 +1,24 @@
-ï»¿using UnityEngine;
+using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerBombController : MonoBehaviour
 {
     [Header("Refs")]
-    public Transform hand; // í”Œë ˆì´ì–´ ì† ìœ„ì¹˜(ìì‹ ì˜¤ë¸Œì íŠ¸)
+    public Transform hand; // ÇÃ·¹ÀÌ¾î ¼Õ À§Ä¡(ÀÚ½Ä ¿ÀºêÁ§Æ®)
 
     [Header("Pickup")]
-    public float pickupRadius = 0.7f;  // í­íƒ„ ì¤ê¸° í—ˆìš© ê±°ë¦¬
-    public LayerMask bombLayer;        // Bomb ë ˆì´ì–´
+    public float pickupRadius = 0.7f;  // ÆøÅº Áİ±â Çã¿ë °Å¸®
+    public LayerMask bombLayer;        // Bomb ·¹ÀÌ¾î
 
     [Header("Throw Direction")]
-    public float deadZone = 0.2f;      // ë°©í–¥ ì…ë ¥ ë°ë“œì¡´
-    private Vector2 lastAim = Vector2.right; // ë§ˆì§€ë§‰ ë°”ë¼ë³´ëŠ” ë°©í–¥(ê¸°ë³¸ ì˜¤ë¥¸ìª½)
+    public float deadZone = 0.2f;      // ¹æÇâ ÀÔ·Â µ¥µåÁ¸
+    private Vector2 lastAim = Vector2.right; // ¸¶Áö¸· ¹Ù¶óº¸´Â ¹æÇâ(±âº» ¿À¸¥ÂÊ)
 
-    private BombController heldBomb;   // ë“¤ê³  ìˆëŠ” í­íƒ„ (ìˆìœ¼ë©´ ì¬íˆ¬ì²™ ê°€ëŠ¥)
+    private BombController heldBomb;   // µé°í ÀÖ´Â ÆøÅº (ÀÖÀ¸¸é ÀçÅõÃ´ °¡´É)
 
     void Update()
     {
-        // 1) ë°©í–¥ ì…ë ¥ ì—…ë°ì´íŠ¸ (4ë°©í–¥ ìš°ì„ )
+        // 1) ¹æÇâ ÀÔ·Â ¾÷µ¥ÀÌÆ® (4¹æÇâ ¿ì¼±)
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
 
@@ -33,7 +33,7 @@ public class PlayerBombController : MonoBehaviour
         }
         if (aim != Vector2.zero) lastAim = aim;
 
-        // 2) ì¤ê¸° (E) : ê·¼ì²˜ ì í™” í­íƒ„ì„ ì†ì— ë“ ë‹¤
+        // 2) Áİ±â (E) : ±ÙÃ³ Á¡È­ ÆøÅºÀ» ¼Õ¿¡ µç´Ù
         if (Input.GetKeyDown(KeyCode.E))
         {
             if (heldBomb == null)
@@ -47,10 +47,10 @@ public class PlayerBombController : MonoBehaviour
             }
         }
 
-        // 3) ë˜ì§€ê¸° / ìƒì„± (F)
+        // 3) ´øÁö±â / »ı¼º (F)
         if (Input.GetKeyDown(KeyCode.F))
         {
-            // ì†ì— ë“¤ê³  ìˆìœ¼ë©´ â†’ ë˜ì§€ê¸°
+            // ¼Õ¿¡ µé°í ÀÖÀ¸¸é ¡æ ´øÁö±â
             if (heldBomb != null)
             {
                 heldBomb.Throw(GetThrowDir());
@@ -58,18 +58,18 @@ public class PlayerBombController : MonoBehaviour
             }
             else
             {
-                // ì†ì— ë“¤ê³  ìˆì§€ ì•Šê³ , í•„ë“œì— í­íƒ„ì´ ì—†ë‹¤ë©´ â†’ ìƒì„± + ìë™ ì í™”
+                // ¼Õ¿¡ µé°í ÀÖÁö ¾Ê°í, ÇÊµå¿¡ ÆøÅºÀÌ ¾ø´Ù¸é ¡æ »ı¼º + ÀÚµ¿ Á¡È­
                 if (!BombManager.Instance.HasActiveBomb)
                 {
                     var bomb = BombManager.Instance.SpawnBomb(hand.position, Quaternion.identity);
                     if (bomb != null)
                     {
-                        // ìƒì„± ì¦‰ì‹œ ì†ì— ë“¤ê³  ìˆë‹¤ê³  ê°€ì •í•˜ì§€ ì•Šê³ , ë°”ë¡œ ë˜ì§€ëŠ” ì—°ì¶œ ì›í•˜ë©´:
+                        // »ı¼º Áï½Ã ¼Õ¿¡ µé°í ÀÖ´Ù°í °¡Á¤ÇÏÁö ¾Ê°í, ¹Ù·Î ´øÁö´Â ¿¬Ãâ ¿øÇÏ¸é:
                         // bomb.PickUp(hand);
                         // bomb.Throw(GetThrowDir());
 
-                        // ì´ë²ˆ ê°€ì´ë“œëŠ” "ìƒì„±ë§Œ" í•˜ê³  í”Œë ˆì´ì–´ê°€ ë‹¤ì‹œ Fë¥¼ ëˆŒëŸ¬ ë˜ì§€ê±°ë‚˜,
-                        // Eë¡œ ë¨¼ì € ì§‘ëŠ” íë¦„ì„ íƒí•˜ë„ë¡ ë‘”ë‹¤.
+                        // ÀÌ¹ø °¡ÀÌµå´Â "»ı¼º¸¸" ÇÏ°í ÇÃ·¹ÀÌ¾î°¡ ´Ù½Ã F¸¦ ´­·¯ ´øÁö°Å³ª,
+                        // E·Î ¸ÕÀú Áı´Â Èå¸§À» ÅÃÇÏµµ·Ï µĞ´Ù.
                     }
                 }
             }
@@ -78,13 +78,13 @@ public class PlayerBombController : MonoBehaviour
 
     private Vector2 GetThrowDir()
     {
-        // ë°©í–¥ì´ 0ì´ë©´ ë§ˆì§€ë§‰ ë°©í–¥ ì‚¬ìš© (ê¸°ë³¸ ì˜¤ë¥¸ìª½)
+        // ¹æÇâÀÌ 0ÀÌ¸é ¸¶Áö¸· ¹æÇâ »ç¿ë (±âº» ¿À¸¥ÂÊ)
         return lastAim == Vector2.zero ? Vector2.right : lastAim.normalized;
     }
 
     private BombController FindNearestIgnitedBomb()
     {
-        // ì£¼ë³€ ì›í˜• íƒìƒ‰
+        // ÁÖº¯ ¿øÇü Å½»ö
         var hits = Physics2D.OverlapCircleAll(transform.position, pickupRadius, bombLayer);
         BombController nearest = null;
         float minDist = float.MaxValue;
@@ -94,8 +94,8 @@ public class PlayerBombController : MonoBehaviour
             var bomb = h.GetComponent<BombController>();
             if (bomb == null) continue;
 
-            // ì í™” ìƒíƒœë§Œ ì¤ëŠ”ë‹¤ (ê¸°íš)
-            // bombê°€ í•­ìƒ ì í™” ìƒíƒœë¡œë§Œ ìš´ìš©ëœë‹¤ë©´ ì´ ì²´í¬ëŠ” ìƒëµ ê°€ëŠ¥
+            // Á¡È­ »óÅÂ¸¸ Áİ´Â´Ù (±âÈ¹)
+            // bomb°¡ Ç×»ó Á¡È­ »óÅÂ·Î¸¸ ¿î¿ëµÈ´Ù¸é ÀÌ Ã¼Å©´Â »ı·« °¡´É
             var dist = Vector2.Distance(transform.position, bomb.transform.position);
             if (dist < minDist)
             {
@@ -106,7 +106,7 @@ public class PlayerBombController : MonoBehaviour
         return nearest;
     }
 
-    // ì¤ê¸° ë°˜ê²½ ì‹œê°í™”
+    // Áİ±â ¹İ°æ ½Ã°¢È­
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.cyan;
