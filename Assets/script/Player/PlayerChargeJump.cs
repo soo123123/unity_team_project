@@ -2,13 +2,14 @@
 
 public class PlayerChargeJump : MonoBehaviour
 {
-    [Header("Jump Settings")]
-    public float minJumpPower = 7f;        // 최소 점프력 (기존보다 상승)
-    public float maxJumpPower = 18f;       // 최대 점프력 (조금 더 강하게)
-    public float chargeSpeed = 3f;         // 점프 충전 속도 (조정 가능)
+    // 인스펙터창에 제목 달아주는 기능 [Header("Text")]
+    [Header("Jump Settings")] 
+    public float minJumpPower = 7f; // 최소 점프력 (기존보다 상승)
+    public float maxJumpPower = 18f; // 최대 점프력 (조금 더 강하게)
+    public float chargeSpeed = 3f; // 점프 충전 속도 (조정 가능)
 
     [Header("Gravity Settings")]
-    public float fallMultiplier = 2.5f;    // 하강 중 중력 강화 배율
+    public float fallMultiplier = 2.5f; // 하강 중 중력 강화 배율
 
     [Header("Ground Check")]
     public Transform groundCheck;
