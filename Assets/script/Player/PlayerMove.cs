@@ -4,22 +4,21 @@
 public class PlayerMove : MonoBehaviour
 {
     [Header("Move Settings")]
-    public float moveSpeed = 5f;         // 이동 속도
+    public float moveSpeed = 5f; // 이동 속도
     public float airMoveMultiplier = 0f; // 공중 이동 제어 비율 (0 = 완전 금지, 0.3 = 살짝 허용)
 
     private Rigidbody2D rb;
-    private PlayerChargeJump jumpScript;
+    private PlayerChargeJump jumpScript; // 클래스를 자료형으로 하는 참조변수를 선언.(지금은 null값.)
     private float inputX;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        jumpScript = GetComponent<PlayerChargeJump>();
+        jumpScript = GetComponent<PlayerChargeJump>(); // 이걸로 참조변수를 지정해 주는 것.
     }
 
     void Update()
     {
-        // 항상 방향 입력은 받는다 (애니메이션 등 용도)
         inputX = Input.GetAxisRaw("Horizontal");
     }
 
