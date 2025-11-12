@@ -1,11 +1,11 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMove : MonoBehaviour
 {
     [Header("Move Settings")]
-    public float moveSpeed = 5f;         // ÀÌµ¿ ¼Óµµ
-    public float airMoveMultiplier = 0f; // °øÁß ÀÌµ¿ Á¦¾î ºñÀ² (0 = ¿ÏÀü ±İÁö, 0.3 = »ìÂ¦ Çã¿ë)
+    public float moveSpeed = 5f;         // ì´ë™ ì†ë„
+    public float airMoveMultiplier = 0f; // ê³µì¤‘ ì´ë™ ì œì–´ ë¹„ìœ¨ (0 = ì™„ì „ ê¸ˆì§€, 0.3 = ì‚´ì§ í—ˆìš©)
 
     private Rigidbody2D rb;
     private PlayerChargeJump jumpScript;
@@ -19,28 +19,28 @@ public class PlayerMove : MonoBehaviour
 
     void Update()
     {
-        // Ç×»ó ¹æÇâ ÀÔ·ÂÀº ¹Ş´Â´Ù (¾Ö´Ï¸ŞÀÌ¼Ç µî ¿ëµµ)
+        // í•­ìƒ ë°©í–¥ ì…ë ¥ì€ ë°›ëŠ”ë‹¤ (ì• ë‹ˆë©”ì´ì…˜ ë“± ìš©ë„)
         inputX = Input.GetAxisRaw("Horizontal");
     }
 
     void FixedUpdate()
     {
-        // ÃæÀü Áß¿¡´Â ¿ÏÀü ±İÁö
+        // ì¶©ì „ ì¤‘ì—ëŠ” ì™„ì „ ê¸ˆì§€
         if (jumpScript != null && jumpScript.IsCharging)
         {
             rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
             return;
         }
 
-        // --- ¹Ù´Ú »óÅÂ ---
+        // --- ë°”ë‹¥ ìƒíƒœ ---
         if (jumpScript != null && jumpScript.IsGrounded)
         {
             rb.linearVelocity = new Vector2(inputX * moveSpeed, rb.linearVelocity.y);
         }
-        // --- °øÁß »óÅÂ ---
+        // --- ê³µì¤‘ ìƒíƒœ ---
         else
         {
-            // airMoveMultiplier == 0 ¡æ °øÁß ÀÌµ¿ ¿ÏÀü ±İÁö
+            // airMoveMultiplier == 0 â†’ ê³µì¤‘ ì´ë™ ì™„ì „ ê¸ˆì§€
             rb.linearVelocity = new Vector2(
                 rb.linearVelocity.x + inputX * moveSpeed * airMoveMultiplier * Time.fixedDeltaTime,
                 rb.linearVelocity.y

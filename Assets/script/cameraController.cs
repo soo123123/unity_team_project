@@ -1,26 +1,26 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class cameraController : MonoBehaviour
 {
     [Header("Target Settings")]
-    public Transform player;          // µû¶ó°¥ ÇÃ·¹ÀÌ¾î
-    public Vector3 offset = new Vector3(0, 1f, -10f); // Ä«¸Ş¶ó À§Ä¡ ¿ÀÇÁ¼Â
+    public Transform player;          // ë”°ë¼ê°ˆ í”Œë ˆì´ì–´
+    public Vector3 offset = new Vector3(0, 1f, -10f); // ì¹´ë©”ë¼ ìœ„ì¹˜ ì˜¤í”„ì…‹
 
     [Header("Smooth Settings")]
-    public float smoothSpeed = 0.125f; // °ªÀÌ ³·À»¼ö·Ï ´õ ºÎµå·´°Ô
+    public float smoothSpeed = 0.125f; // ê°’ì´ ë‚®ì„ìˆ˜ë¡ ë” ë¶€ë“œëŸ½ê²Œ
     private Vector3 velocity = Vector3.zero;
 
     void LateUpdate()
     {
-        // player°¡ ºñ¾îÀÖÀ¸¸é ¿À·ù ¹æÁö
+        // playerê°€ ë¹„ì–´ìˆìœ¼ë©´ ì˜¤ë¥˜ ë°©ì§€
         if (player == null) return;
 
-        // ¸ñÇ¥ À§Ä¡ °è»ê
+        // ëª©í‘œ ìœ„ì¹˜ ê³„ì‚°
         Vector3 desiredPosition = player.position + offset;
 
-        // ºÎµå·´°Ô ÀÌµ¿
+        // ë¶€ë“œëŸ½ê²Œ ì´ë™
         transform.position = Vector3.SmoothDamp(
             transform.position,
             desiredPosition,
